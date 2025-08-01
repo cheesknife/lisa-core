@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI
 from pydantic import BaseModel
 import openai
@@ -10,7 +11,6 @@ class Message(BaseModel):
 
 @app.post("/chat")
 async def chat(msg: Message):
-    import os
 openai.api_key = os.getenv("OPENAI_API_KEY")
     response = openai.ChatCompletion.create(
         model="gpt-4",
