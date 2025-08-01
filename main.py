@@ -14,6 +14,10 @@ class Message(BaseModel):
     user_id: str
     content: str
 
+@app.get("/")
+async def root():
+    return {"status": "ok"}
+
 @app.post("/chat")
 async def chat(msg: Message):
     if msg.user_id != ALLOWED_USER_ID:
