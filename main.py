@@ -24,8 +24,10 @@ async def chat(msg: Message):
         return {"error": "Access denied"}
 
     openai.api_key = os.getenv("OPENAI_API_KEY")
+
     response = openai.ChatCompletion.create(
         model="gpt-4",
         messages=[{"role": "user", "content": msg.content}]
     )
-    return {"reply": response.choices[0].message.content}
+
+    return {"reply": response["choices"][0]["message"]["content"]}
