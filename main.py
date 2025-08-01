@@ -25,9 +25,12 @@ async def chat(msg: Message):
 
     openai.api_key = os.getenv("OPENAI_API_KEY")
 
-    response = openai.ChatCompletion.create(
-        model="gpt-4",
-        messages=[{"role": "user", "content": msg.content}]
-    )
-
-    return {"reply": response["choices"][0]["message"]["content"]}
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-4",
+            messages=[{"role": "user", "content": msg.content}]
+        )
+        return {"reply": response["choices"][0]["message"]["content"]}
+    except Exception as e:
+        # Возвращаем ошибку прямо в Telegram
+        return {"reply": f"OpenAI error: {str(e)}"}
